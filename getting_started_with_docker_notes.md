@@ -1,5 +1,6 @@
 
 ```bash
+# Instructor repo
 git clone https://github.com/vfarcic/go-demo.git
 
 docker-compose up -d
@@ -14,12 +15,9 @@ docker container inspect go-demo_app_1 | jq '.'
 
 PORT=$(docker container inspect go-demo_app_1 | jq -r '.[0].NetworkSettings.Ports."8080/tcp"[0].HostPort')
 
-```
-
-#
+# Build the GO app and then pull the generated binary into the container
 
 docker container run -it --rm -v $PWD:/tmp -w /tmp golang:1.6 sh -c "go get -d -v -t && go build -v -o go-demo"
-
 
 # Set up a local registry
 
@@ -36,3 +34,4 @@ docker image push localhost:5000/go-demo:1.1
 # Stop Container
 
 docker container rm -f registry
+```
